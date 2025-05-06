@@ -1,0 +1,32 @@
+{
+  "name": "Simple SMS Blaster",
+  "description": "A simple SMS blaster",
+  "repository": "https://github.com/nexmo-se/simple-sms-blaster",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "env": {
+    "API_URL": {
+      "description": "Nexmo SMS API Endpoint",
+      "value": "https://rest.nexmo.com/sms/json"
+    },
+    "API_KEY": {
+      "description": "Nexmo API Key",
+      "required": true
+    },
+    "API_SECRET": {
+      "description": "Nexmo API Secret",
+      "required": true
+    },
+    "SENDER_ID": {
+      "description": "Sender ID used for sending out SMS",
+      "required": true
+    },
+    "TPS": {
+      "description": "Text per second. Rate of sending out SMS Request",
+      "value": "30"
+    },
+    "CSV_SKIP_LINES": {
+      "description": "Number of lines to skip when reading CSV. Useful if there are header lines",
+      "value": "0"
+    }
+  }
+}
