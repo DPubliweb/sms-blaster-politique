@@ -22,7 +22,8 @@ const apiSecret = process.env.API_SECRET;
 //const senderId = process.env.SENDER_ID;
 const tps = parseInt(process.env.TPS || '40', 10);
 const csvFromLine = parseInt(process.env.CSV_SKIP_LINES || '0', 10) + 1;
-
+const authMiddleware = require('./middlewares/auth');
+//const authMiddleware = require('./middlewares/auth');
 console.log(`Will start reading CSV from row ${csvFromLine}`);
 const rateLimitAxios = rateLimiterService.newInstance(tps);
 
@@ -43,7 +44,7 @@ app.get('/', (_, res) => res.send('Hello world'));
 app.get('/success', (_, res) => res.send('You have successfully deployed the Simple SMS Blaster'));
 
 // For Internal Use, called by Upload
-app.post('/blast', (req, res) => {
+app.post('/blast', authMiddleware, (req, res) => {
   const {
     campaignName,
     records,
@@ -84,7 +85,7 @@ app.post('/blast', (req, res) => {
   }), 1000);
 });
 
-app.post('/send', async (req, res) => {
+app.post('/send', authMiddleware, async (req, res) => {
   try {
     const { campaign = 'campaign', records = [] , senderid } = req.body;
     const promises = records.map(async (record) => {
@@ -109,7 +110,7 @@ app.post('/send', async (req, res) => {
 });
 
 // For User use, for uploading CSV
-app.post('/upload', upload, (req, res) => {
+app.post('/upload', upload, authMiddleware, (req, res) => {
   // Use file name as campaign name
   let campaignName = req.file.originalname;
   if (campaignName.toLowerCase().lastIndexOf('.csv') === campaignName.length - 4) {
