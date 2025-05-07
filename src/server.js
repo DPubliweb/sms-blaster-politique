@@ -110,7 +110,7 @@ app.post('/send', authMiddleware, async (req, res) => {
 });
 
 // For User use, for uploading CSV
-app.post('/upload', upload, authMiddleware, (req, res) => {
+app.post('/upload', authMiddleware, upload,  (req, res) => {
   // Use file name as campaign name
   let campaignName = req.file.originalname;
   if (campaignName.toLowerCase().lastIndexOf('.csv') === campaignName.length - 4) {
