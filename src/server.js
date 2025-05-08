@@ -82,6 +82,9 @@ app.post('/blast', authMiddleware, (req, res) => {
   }, {
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
+    headers: {
+      'x-api-key': process.env.ACCESS_KEY,
+    }
   }), 1000);
 });
 
@@ -146,6 +149,9 @@ app.post('/upload', authMiddleware, upload,  (req, res) => {
   }, {
     maxContentLength: Infinity,
     maxBodyLength: Infinity,
+    headers: {
+      'x-api-key': process.env.ACCESS_KEY,
+    }
   }));
 });
 
